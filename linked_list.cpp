@@ -16,7 +16,7 @@ Node* node(int value, Node* link)
 class LinkedList
 {
 public:
-    
+    // variables
     Node* head;
     Node* tail;
     
@@ -45,10 +45,17 @@ public:
     void printLL()
     {
         Node* next = head->link;
+        std::cout << "Node(";
         while (next != NULL)
         {
-            std::cout << "Node(" << next->value << ",";
-            next = next->link;
+            if (next == head->link)
+            {
+                std::cout << next->value;    
+            }
+            else 
+            {
+                std::cout << ", " << next->value;
+            }
         }
         std::cout << ")" << std::endl;
     }
