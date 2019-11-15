@@ -56,6 +56,8 @@ public:
             {
                 std::cout << ", " << next->value;
             }
+            
+            next = next->link;
         }
         std::cout << ")" << std::endl;
     }
