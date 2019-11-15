@@ -5,11 +5,6 @@ struct Node{
     Node* link;
 };
 
-struct LL{
-    Node* head;
-    Node* tail;
-}
-
 Node* node(int value, Node* link)
 {
     Node* retval = (Node *)malloc(sizeOf(Node));
@@ -21,33 +16,35 @@ Node* node(int value, Node* link)
 class LinkedList
 {
 public:
+    
+    Node* head;
+    Node* tail;
+    
     // makes the linked list
-    LL makeLL()
+    void makeLL()
     {
-        LL retval;
         Node* n = node(0, NULL);
-        retval.head = n;
-        retval.tail = retval.head;
-        return retval;
+        head = n;
+        tail = head;
     }
 
     // inserts node to the begining of the list
-    void insert(LL list, int value)
+    void insert(int value)
     {
-        Node* n = node(value, list.head->link);
-        list.head->link = n;
+        Node* n = node(value, head->link);
+        head->link = n;
     }
 
     // removes the first node of the list
-    void pop(LL list)
+    void pop()
     {
-        list.head->link = list.head->link->link;
+        head->link = head->link->link;
     }
 
     // prints out the current linked list
-    void printLL(LL list)
+    void printLL()
     {
-        Node* next = list.head->link;
+        Node* next = head->link;
         while (next != NULL)
         {
             std::cout << "Node(" << next->value << ",";
