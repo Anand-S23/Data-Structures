@@ -7,7 +7,7 @@ struct Node{
 
 Node* node(int value, Node* link)
 {
-    Node* retval = (Node *)malloc(sizeOf(Node));
+    Node* retval = (Node *)malloc(sizeof(Node));
     retval->value = value;
     retval->link = link;
     return retval;
@@ -50,12 +50,18 @@ public:
             std::cout << "Node(" << next->value << ",";
             next = next->link;
         }
-        std::cout << ")" << endl;
+        std::cout << ")" << std::endl;
     }
-}
+};
 
 int main() {
+    LinkedList list;
     
+    list.makeLL();
+    list.insert(10);
+    list.insert(20);
+    list.printLL();
+    list.pop();
+    list.printLL();
 }
-
 
