@@ -1,5 +1,5 @@
 # Data-Structures
-Different data structures implemented in C++ and Python 
+Different data structures and algorithms which are useful when solving different problems.
 
 ## Data Structures Included
 - Linked List
