@@ -75,6 +75,11 @@ void reverse(LL list)
     list.head->link = prev;
 }
 
+void recursive_reverse(LL list)
+{
+    // Pass
+}
+
 void print_list(LL list)
 {
     int i;
