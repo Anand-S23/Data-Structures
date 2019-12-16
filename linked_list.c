@@ -19,43 +19,76 @@ LL new_list()
     return ret_list; 
 } 
 
-void insert(LL* list, int data, int pos)
+void insert(LL list, int data, int pos)
 {
     int i;
     Node* next = list.head;
     Node* in_node = new_node(0, NULL);
 
-    if (pos > len)
+    if (pos > list.len + 1)
     {
         printf("The list is too short, cannot add node there.\n");
-	break;
     } 
-
-    if (pos == 0)
-    {
-        in_node->link = list.head->link;
-	list.head = in_node;
-    }
     else
     {
-        int i;
-            
-        for (i = 0; i < pos; i++)
-	{
-	    next = next->link;
-	}
-	in_node->link = next->link;
-	next = in_node;
+        if (pos == 0)
+        {
+            in_node->link = list.head->link;
+        list.head = in_node;
+        }
+        else
+        {
+            int i;
+                
+            for (i = 0; i < pos; i++)
+        {
+            next = next->link;
+        }
+        in_node->link = next->link;
+        next = in_node;
+        }
+        
+        list.len++;
+    }
+}
+
+void print_list(LL list)
+{
+    int i;
+    Node* next = list.head;
+
+    for (i = 0; i < list.len; i++)
+    {
+        next = next->link;
+        printf("%d ", next->data);
     }
 
-    list.len++;
+    printf("\n");
 }
     
 void main(void)
 {
     LL list = new_list();
+    insert(list, 1, 0);
+    insert(list, 2, 0);
+    insert(list, 3, 0);
+    insert(list, 4, 0);
     insert(list, 5, 0);
-    insert(list, 6, 1);
+    insert(list, 6, 0);
 
-    printf("The value of the head is %d\n", list.head->data);
+    print_list(list);
+
+    Node* next = list.head;
+    int i; 
+
+    for (i = 0; i < list.len; i++)
+    {
+        next = next->link;
+        printf("%d ", next->data);
+    }
+
+    printf("\n");
+
+    printf("The value of the head is %d\n", list.head->link->data);
+    printf("is this even working?");
 }
