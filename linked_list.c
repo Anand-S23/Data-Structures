@@ -22,7 +22,7 @@ LL new_list()
 void insert(LL list, int data, int pos)
 {
     int i;
-    Node* next = list.head->link;
+    Node* current = list.head->link;
     Node* in_node = new_node(data, NULL);
 
     if (pos == 0)
@@ -34,35 +34,76 @@ void insert(LL list, int data, int pos)
     {
         for (i = 0; i < pos-1; i++)
         {
-            next = next->link;
+            current = current->link;
         }
-        in_node->link = next->link;
-        next->link = in_node;
+        in_node->link = current->link;
+        current->link = in_node;
     }
         
     list.len++;
 }
 
+void delete(LL list, int pos)
+{
+    int i; 
+    Node* current = list.head->link;
+
+    for (i = 0; i < pos-1; i++)
+    {
+        current = current->link;
+    }
+
+    Node* temp = current->link;
+    current->link = temp->link;
+    free(temp);
+}
+
+void reverse(LL list)
+{
+    Node* current = list.head->link;
+    Node* prev = NULL;
+    Node* temp;
+
+    while(current != NULL)
+    {
+        temp = current->link;
+        current->link = prev;
+        prev = current; 
+        current = temp;
+    }
+
+    list.head->link = prev;
+}
+
 void print_list(LL list)
 {
     int i;
-    Node* next = list.head->link;
+    Node* current = list.head->link;
 
-    while (next != NULL)
+    if (current == NULL)
     {
-        printf("%d ", next->data);
-        next = next->link;
+        printf("List is empty.\n");
     }
-
-    printf("\n");
+    else
+    {
+        while (current != NULL)
+        {
+            printf("%d ", current->data);
+            current = current->link;
+        }
+        
+        printf("\n");
+    }
 }
     
 void main(void)
 {
     LL list = new_list();
+
     insert(list, 1, 0);
     insert(list, 2, 1);
-    insert(list, 1, 2);
+    insert(list, 3, 2);
+    reverse(list);
 
     print_list(list);
 }
