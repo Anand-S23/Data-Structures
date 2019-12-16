@@ -22,8 +22,8 @@ LL new_list()
 void insert(LL list, int data, int pos)
 {
     int i;
-    Node* next = list.head;
-    Node* in_node = new_node(0, NULL);
+    Node* next = list.head->link;
+    Node* in_node = new_node(data, NULL);
 
     if (pos == 0)
     {
@@ -32,12 +32,12 @@ void insert(LL list, int data, int pos)
     }
     else
     {
-        for (i = 0; i < pos; i++)
+        for (i = 0; i < pos-1; i++)
         {
             next = next->link;
         }
         in_node->link = next->link;
-        next = in_node;
+        next->link = in_node;
     }
         
     list.len++;
@@ -46,12 +46,12 @@ void insert(LL list, int data, int pos)
 void print_list(LL list)
 {
     int i;
-    Node* next = list.head;
+    Node* next = list.head->link;
 
-    for (i = 0; i < list.len; i++)
+    while (next != NULL)
     {
-        next = next->link;
         printf("%d ", next->data);
+        next = next->link;
     }
 
     printf("\n");
@@ -61,6 +61,8 @@ void main(void)
 {
     LL list = new_list();
     insert(list, 1, 0);
+    insert(list, 2, 1);
+    insert(list, 1, 2);
 
     print_list(list);
 }
