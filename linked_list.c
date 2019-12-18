@@ -81,10 +81,21 @@ void reverse(LL list)
 }
 
 
-// recursively reverses the linked list
-void recursive_reverse(LL list)
+// recursively reverses the linked list - ( the head node is passed in )
+LL recursive_reverse(LL list, Node* current)
 {
-    // Pass
+    LL the_list = list;
+
+    if (current->link == NULL)
+    {
+        list.head->link = current;
+        return the_list;
+    }
+
+    recursive_reverse(the_list, current->link);
+    Node* next = current->link;
+    next->link = current;
+    current->link = NULL;
 }
 
 // prints the elements of the linked list
@@ -128,7 +139,7 @@ void main(void)
     insert(list, 1, 0);
     insert(list, 2, 1);
     insert(list, 3, 2);
-    reverse(list);
+    LL the_list = recursive_reverse(list, list.head);
 
-    print_list(list);
+    print_list(the_list);
 }

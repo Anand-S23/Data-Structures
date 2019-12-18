@@ -16,7 +16,7 @@ LL new_list();
 void insert(LL list, int data, int pos);
 void delete(LL list, int pos);
 void reverse(LL list);
-void recursive_reverse(LL list);
+LL recursive_reverse(LL list, Node* node);
 void print_list(LL list);
 int lenght(LL list);
 int is_empty(LL list);
