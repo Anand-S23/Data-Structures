@@ -3,6 +3,7 @@
 
 #include "linked_list.h"
 
+// makes a new node using malloc
 Node* new_node(int data, Node* link)
 {
     Node* ret_node = (Node*)malloc(sizeof(Node));
@@ -11,6 +12,7 @@ Node* new_node(int data, Node* link)
     return ret_node;
 }
 
+// makes a new list with head of {0, NULL}
 LL new_list()
 {
     LL ret_list;
@@ -19,6 +21,7 @@ LL new_list()
     return ret_list; 
 } 
 
+// inserts the data into a certain postion that is passed in
 void insert(LL list, int data, int pos)
 {
     int i;
@@ -43,6 +46,7 @@ void insert(LL list, int data, int pos)
     list.len++;
 }
 
+// deletes an element based on the postion that is passed
 void delete(LL list, int pos)
 {
     int i; 
@@ -58,6 +62,7 @@ void delete(LL list, int pos)
     free(temp);
 }
 
+// iteratively reverses the linked list
 void reverse(LL list)
 {
     Node* current = list.head->link;
@@ -75,11 +80,14 @@ void reverse(LL list)
     list.head->link = prev;
 }
 
+
+// recursively reverses the linked list
 void recursive_reverse(LL list)
 {
     // Pass
 }
 
+// prints the elements of the linked list
 void print_list(LL list)
 {
     int i;
@@ -100,7 +108,19 @@ void print_list(LL list)
         printf("\n");
     }
 }
+
+// return the lenght of the linked list 
+int lenght(LL list)
+{
+    return list.len;
+}
     
+// returns true or false wether if the list is empty or not
+int is_empty(LL list)
+{
+    return list.head->link == NULL;
+}
+
 void main(void)
 {
     LL list = new_list();

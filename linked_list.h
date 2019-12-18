@@ -18,3 +18,5 @@ void delete(LL list, int pos);
 void reverse(LL list);
 void recursive_reverse(LL list);
 void print_list(LL list);
+int lenght(LL list);
+int is_empty(LL list);
