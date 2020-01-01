@@ -20,3 +20,7 @@ LL recursive_reverse(LL list, Node* node);
 void print_list(LL list);
 int lenght(LL list);
 int is_empty(LL list);
+
+void push(LL list, int data);
+void pop(LL list);
+int top(LL list);
