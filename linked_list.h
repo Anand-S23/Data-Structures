@@ -1,26 +1,25 @@
 typedef struct node
 {
     int data;
-    struct node* link;
+    struct node* next;
 } Node;
 
 typedef struct linked_list
 {
     Node* head;
-    int len;
-} LL;
+    int size;
+} Linked_List;
 
+Node* CreateNode(int);
+Linked_List CreateList(); 
+void push(Linked_List *, int); 
+int insert(Linked_List *, int, int); 
+int pop(Linked_List *); 
+int remove(Linked_List *, int); 
+int search(Linked_List *, int); 
+int get(Linked_List *, int); 
+Linked_List* recursive_reverse(Linked_List *, Node *); 
+void reverse(Linked_List *); 
+int empty(Linked_List *); 
+void print(Linked_List *); 
 
-Node* new_node(int data, Node* link);
-LL new_list();
-void insert(LL list, int data, int pos);
-void delete(LL list, int pos);
-void reverse(LL list);
-LL recursive_reverse(LL list, Node* node);
-void print_list(LL list);
-int lenght(LL list);
-int is_empty(LL list);
-
-void push(LL list, int data);
-void pop(LL list);
-int top(LL list);

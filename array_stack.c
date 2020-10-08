@@ -6,40 +6,22 @@ int current = -1;
 
 void push(int num)
 {
-    current += 1;
+    current++;
     stack[current] = num;
 }
 
 void pop()
 {
-    current -= 1;
+    current--;
 }
 
-void top()
+int top()
 {
-    printf("%d\n", stack[current]);
+    return stack[current];
 }
 
-void isEmpty()
+int isEmpty()
 {
-    if (current == -1)
-    {
-        printf("The stack is empty.\n");
-    }
-    else
-    {
-        printf("The stack is not empty.\n");
-    }
+    return (current == -1);
 }
 
-int main()
-{
-    isEmpty();
-    push(2);
-    push(5);
-    push(4);
-    pop();
-    top();
-    isEmpty();
-    return 0;
-}

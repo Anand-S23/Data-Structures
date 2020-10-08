@@ -3,143 +3,177 @@
 
 #include "linked_list.h"
 
-// makes a new node using malloc
-Node* new_node(int data, Node* link)
+Node* CreateNode(int data)
 {
-    Node* ret_node = (Node*)malloc(sizeof(Node));
-    ret_node->data = data;
-    ret_node->link = link;
+    Node *ret_node = (Node *)malloc(sizeof(Node)); 
+    ret_node->data = data; 
+    ret_node->next = NULL;
     return ret_node;
 }
 
-// makes a new list with head of {0, NULL}
-LL new_list()
+Linked_List CreateLinkedList()
 {
-    LL ret_list;
-    ret_list.head = new_node(0, NULL);
-    ret_list.len = 0;
-    return ret_list; 
-} 
+    Linked_List ret_list = {0}; 
+    ret_list.head = NULL; 
+    ret_list.size = 0;
+}
 
-// inserts the data into a certain postion that is passed in
-void insert(LL list, int data, int pos)
+void push(Linked_List *ll, int data)
 {
-    int i;
-    Node* current = list.head->link;
-    Node* in_node = new_node(data, NULL);
+    Node *temp = ll->head; 
+    Node *node = CreateNode(data);
+    ll->head = node; 
+    ll->head->next = temp;
+}
 
-    if (pos == 0)
+int insert(Linked_List *ll, int data, int index)
+{
+    Node *current = ll->head; 
+    Node *node = CreateNode(data);
+
+    if (index <= ll->size && index >= 0)
     {
-        in_node->link = list.head->link;
-        list.head->link = in_node;
-    }
-    else
-    {
-        for (i = 0; i < pos-1; i++)
+        if (index == 0)
         {
-            current = current->link;
+            Node *temp = ll->head; 
+            ll->head = node; 
+            ll->head->next = temp;
         }
-        in_node->link = current->link;
-        current->link = in_node;
+        else 
+        {
+            for (int i = 0; i < index; ++i)
+            {
+                current = current->next;
+            }
+            Node *temp = current->next; 
+            current->next = node; 
+            current->next->next = temp; 
+        }
+
+        ll->size++;
+        return 1;
     }
-        
-    list.len++;
+
+    return 0; 
 }
 
-// deletes an element based on the postion that is passed
-void delete(LL list, int pos)
+int pop(Linked_List *ll)
 {
-    int i; 
-    Node* current = list.head->link;
+    int pop_val = ll->head->data;
+    ll->head = ll->head->next;
+    return pop_val; 
+}
 
-    for (i = 0; i < pos-1; i++)
+int remove(Linked_List *ll, int index)
+{
+    Node *current = ll->head; 
+
+    if (index < ll->size && index >= 0)
     {
-        current = current->link;
+        if (index == 0)
+        {
+            pop(ll); 
+        }
+        else
+        {
+            for (int i = 0; i < index; ++i)
+            {
+                current = current->next; 
+            }
+            Node *temp = current->next; 
+            current->next = current->next->next; 
+            free(temp);
+        }
     }
-
-    Node* temp = current->link;
-    current->link = temp->link;
-    free(temp);
 }
 
-// iteratively reverses the linked list
-void reverse(LL list)
+int search(Linked_List *ll, int data)
 {
-    Node* current = list.head->link;
+    Node *current = ll->head; 
+
+    for (int i = 0; i < ll->size; ++i)
+    {
+        if (current->data == data)
+        {
+            return i; 
+        }
+
+        current = current->next; 
+    }
+
+    return -1; 
+}
+
+int get(Linked_List *ll, int index)
+{
+    Node *current = ll->head;
+
+    if (index >= ll->size || index < 0)
+    {
+        printf("Invalid index, index out of range");
+        exit(1);
+    }
+
+    for (int i = 0; i <= index; ++i)
+    {
+        current = current->next; 
+    }
+
+    return current->data;
+}
+
+Linked_List* recursive_reverse(Linked_List *ll, Node *current)
+{
+    Linked_List *list = ll;
+
+    if (current->next == NULL)
+    {
+        ll->head->next = current;
+        return list;
+    }
+
+    reverse(list, current->next);
+    Node *temp = current->next;
+    temp->next = current;
+    current->next = NULL;
+}
+
+void reverse(Linked_List *ll)
+{
+    Node* current = ll->head->next;
     Node* prev = NULL;
     Node* temp;
 
     while(current != NULL)
     {
-        temp = current->link;
-        current->link = prev;
+        temp = current->next;
+        current->next = prev;
         prev = current; 
         current = temp;
     }
 
-    list.head->link = prev;
+    ll->head->next = prev;
 }
 
-
-// recursively reverses the linked list - ( the head node is passed in )
-LL recursive_reverse(LL list, Node* current)
+int empty(Linked_List *ll)
 {
-    LL the_list = list;
-
-    if (current->link == NULL)
-    {
-        list.head->link = current;
-        return the_list;
-    }
-
-    recursive_reverse(the_list, current->link);
-    Node* next = current->link;
-    next->link = current;
-    current->link = NULL;
+    return ll->head->next == NULL; 
 }
 
-// prints the elements of the linked list
-void print_list(LL list)
+void print(Linked_List *ll)
 {
-    int i;
-    Node* current = list.head->link;
+    Node *current = ll->head; 
 
     if (current == NULL)
     {
-        printf("List is empty.\n");
+        printf("Empty List\n");
+        return;
     }
-    else
+
+    while (current != NULL)
     {
-        while (current != NULL)
-        {
-            printf("%d ", current->data);
-            current = current->link;
-        }
-        
-        printf("\n");
+        printf("%d->", current->data);
+        current = current->next;
     }
-}
-
-// return the lenght of the linked list 
-int lenght(LL list)
-{
-    return list.len;
-}
-    
-// returns true or false wether if the list is empty or not
-int is_empty(LL list)
-{
-    return list.head->link == NULL;
-}
-
-void main(void)
-{
-    LL list = new_list();
-
-    insert(list, 1, 0);
-    insert(list, 2, 1);
-    insert(list, 3, 2);
-    LL the_list = recursive_reverse(list, list.head);
-
-    print_list(the_list);
+    printf("NULL \n"); 
 }
